@@ -1,0 +1,20 @@
+<ion-card>
+  <ion-img src="{{imgUrl}}"></ion-img>
+  <ion-grid class="ion-padding">
+    <ion-row class="ion-margin-bottom">
+      <ion-text style="font-size: 18px; font-weight: bolder">{{title}}</ion-text>
+    </ion-row>
+    <ion-row class="ion-margin-bottom">
+      <ion-text class="ion-text-justify">{{description}}
+      </ion-text>
+    </ion-row>
+    <ion-row class="ion-justify-content-end">
+      <ion-button fill="clear" size="small">{{totalLike}}
+        <ion-icon slot="start" name="heart-outline"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" size="small">{{totalPart}}
+        <ion-icon slot="start" name="bookmark-outline"></ion-icon>
+      </ion-button>
+    </ion-row>
+  </ion-grid>
+</ion-card>

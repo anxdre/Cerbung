@@ -1,0 +1,23 @@
+<app-toolbar title="Cerbung"></app-toolbar>
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <ion-searchbar placeholder="Search..."></ion-searchbar>
+    <ion-list>
+      <ion-button size="small" fill="solid">Semua</ion-button>
+      <ion-button size="small" fill="outline">Aksi</ion-button>
+      <ion-button size="small" fill="outline">Horror</ion-button>
+      <ion-button size="small" fill="outline">Komedi</ion-button>
+      <ion-button size="small" fill="outline">Komedi</ion-button>
+      <ion-button size="small" fill="outline">Komedi</ion-button>
+      <ion-button size="small" fill="outline">Komedi</ion-button>
+      <ion-button size="small" fill="outline">Komedi</ion-button>
+    </ion-list>
+  </div>
+  <div *ngFor="let item of listOfStories">
+    <app-home-item title="Lorem ipsum"
+                   description="On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the
+                   charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs
+                   to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain."
+    imgUrl="https://img.freepik.com/premium-photo/girl-is-taking-photo-with-camera_727939-5369.jpg"></app-home-item>
+  </div>
+</ion-content>
