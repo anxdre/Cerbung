@@ -1,13 +1,112 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Create</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!--suppress JSIncompatibleTypesComparison -->
+<app-toolbar title="Create story"></app-toolbar>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Create</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div *ngIf="[userStep] == 1" class="ion-padding">
+    <ion-input class="ion-margin-bottom" [(ngModel)]="storyData.storyTitle" label="Enter title"
+               label-placement="floating" fill="outline"
+               placeholder="Enter title"></ion-input>
+    <div class="container">
+      <ion-textarea class="ion-margin-bottom text-area-medium-height" [(ngModel)]="storyData.storyDescription"
+                    fill="outline" label="Short description"
+                    label-placement="floating"
+                    placeholder="Enter synopsis"></ion-textarea>
+    </div>
+    <ion-input class="ion-margin-bottom" label="Thumbnail link" [(ngModel)]="storyData.storyThumbnail"
+               label-placement="floating" fill="outline"
+               placeholder="Enter image url"></ion-input>
+
+    <ion-select fill="outline" aria-label="genre" [(ngModel)]="storyData.storyGenre" label="Select genre"
+                label-placement="floating" interface="popover">
+      <ion-select-option value="mystery">Mystery</ion-select-option>
+      <ion-select-option value="horror">Horror</ion-select-option>
+      <ion-select-option value="comedy">Comedy</ion-select-option>
+    </ion-select>
+  </div>
+
+  <div *ngIf="[userStep] == 2" class="ion-padding">
+    <ion-select fill="outline" [(ngModel)]="storyData.storyVisibility" (ionChange)="onVisibilityChange()"
+                aria-label="visibility" label="Story visibility" label-placement="floating" interface="popover">
+      <ion-select-option value="restricted">
+        <ion-text>Restricted</ion-text>
+      </ion-select-option>
+      <ion-select-option value="public">
+        <ion-text>Public</ion-text>
+      </ion-select-option>
+    </ion-select>
+    <ion-text style="font-size: small;color: red">{{visibilityDesc}}</ion-text>
+
+    <ion-textarea [(ngModel)]="storyFirstParagarph" class="ion-margin-top ion-margin-bottom text-area-medium-height"
+                  fill="outline"
+                  label="First paragraph"
+                  label-placement="floating"
+                  placeholder="Enter first paragraph"></ion-textarea>
+  </div>
+
+  <div *ngIf="[userStep] == 3" class="ion-padding">
+    <ion-card style="border-radius: 16px">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-text style="font-size: 22px;font-weight: bold"> {{storyData.storyTitle}}</ion-text>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-chip color="primary">{{storyData.storyGenre}}</ion-chip>
+        <ion-chip color="warning">{{storyData.storyVisibility}}</ion-chip>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card style="border-radius: 16px">
+      <ion-card-content>
+        <ion-list>
+          <ion-text style="font-size: 18px;font-weight: bold">Short description</ion-text>
+          <ion-item>
+            {{storyData.storyDescription}}
+          </ion-item>
+          <ion-text style="font-size: 18px;font-weight: bold">First story</ion-text>
+          <ion-item>
+            {{storyFirstParagarph}}
+          </ion-item>
+          <ion-text style="font-size: 18px;font-weight: bold">Agreement</ion-text>
+          <br>
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col>
+                <ion-text>I aggree with the rules and
+                  policies in creating Cerbung. This includes does not containing racial slurs, discrimination,
+                  religion,
+                  advertisement, and politics.
+                </ion-text>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-checkbox [(ngModel)]="agreementConfirmation"></ion-checkbox>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        </ion-list>
+        <ion-grid>
+          <div *ngFor="let msg of validationMessage">
+            <ion-label color="danger">
+              ▶ {{msg}}
+            </ion-label>
+          </div>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="ion-padding">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col class="ion-text-start">
+          <ion-button fill="outline" (click)="prevStep()">Prev</ion-button>
+        </ion-col>
+        <ion-col class="ion-text-center">{{userStep}} of 3</ion-col>
+        <ion-col class="ion-text-end">
+          <ion-button fill="outline" (click)="nextStep()">Next</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

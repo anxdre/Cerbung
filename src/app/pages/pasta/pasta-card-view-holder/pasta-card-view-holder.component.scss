@@ -1,0 +1,11 @@
+$defaultPadding : 16px;
+.danger-div{
+  background: red;
+  width: fit-content;
+  padding-left: $defaultPadding;
+  padding-right: $defaultPadding;
+  border-radius: $defaultPadding;
+  ion-text{
+    color: white;
+  }
+}

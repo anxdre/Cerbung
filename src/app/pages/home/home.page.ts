@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Story} from "../../data/model/Story";
+import {DatabaseHelperService} from "../../data/services/database-helper.service";
 
 @Component({
   selector: 'app-home',
@@ -6,7 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  listOfStories = [{},{},{},{},{},{},{}]
-  constructor() {}
+  listOfStories: Story[] = []
+
+  constructor(private dbHelper: DatabaseHelperService) {
+  }
+
+  ngOnInit() {
+    this.listOfStories = this.dbHelper.listOfStory
+  }
 
 }

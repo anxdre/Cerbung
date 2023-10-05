@@ -15,7 +15,7 @@
 
   <div class="ion-padding">
     <div *ngFor="let item of listOfPasta">
-      <app-pasta-card-view-holder title="{{item.name}}"> </app-pasta-card-view-holder>
+      <app-pasta-card-view-holder [spice]="item.spice" imgUrl="{{item.url}}" title="{{item.name}}" description="{{item.description}}"></app-pasta-card-view-holder>
     </div>
   </div>
 </ion-content>
