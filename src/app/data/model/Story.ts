@@ -5,7 +5,7 @@ export class Story{
   private _storyThumbnail:string
   private _storyGenre:string
   private _storyVisibility:string
-  private _storyParagraph:String[]
+  private _storyParagraph:string[]
 
   constructor() {
     this._storyTitle = "";
@@ -17,11 +17,11 @@ export class Story{
   }
 
 
-  get storyParagraph(): String[] {
+  get storyParagraph(): string[] {
     return this._storyParagraph;
   }
 
-  set storyParagraph(value: String[]) {
+  set storyParagraph(value: string[]) {
     this._storyParagraph = value;
   }
 

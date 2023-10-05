@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { PrefsPageRoutingModule } from './prefs-routing.module';
 
 import { PrefsPage } from './prefs.page';
+import {SharedModule} from "../../shared/module/shared.module";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PrefsPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        PrefsPageRoutingModule,
+        SharedModule
+    ],
   declarations: [PrefsPage]
 })
 export class PrefsPageModule {}
