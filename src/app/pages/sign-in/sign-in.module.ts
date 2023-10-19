@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FollowingPageRoutingModule } from './following-routing.module';
+import { SignInPageRoutingModule } from './sign-in-routing.module';
 
-import { FollowingPage } from './following.page';
+import { SignInPage } from './sign-in.page';
 import {SharedModule} from "../../shared/module/shared.module";
 
 @NgModule({
@@ -14,9 +14,9 @@ import {SharedModule} from "../../shared/module/shared.module";
         CommonModule,
         FormsModule,
         IonicModule,
-        FollowingPageRoutingModule,
+        SignInPageRoutingModule,
         SharedModule
     ],
-  declarations: [FollowingPage]
+  declarations: [SignInPage]
 })
-export class FollowingPageModule {}
+export class SignInPageModule {}

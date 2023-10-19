@@ -1,32 +1,26 @@
 import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {mapToCanActivate, PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from "./shared/guards/auth.guard";
+import {AppComponent} from "./app.component";
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
-  },
-  {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    component: AppComponent,
   },
   {
-    path: 'following',
-    loadChildren: () => import('./pages/following/following.module').then(m => m.FollowingPageModule)
+    path: 'menu',
+    loadChildren: () => import('./pages/main/main.module').then(m => m.MainPageModule),
   },
   {
-    path: 'create',
-    loadChildren: () => import('./pages/create/create.module').then(m => m.CreatePageModule)
+    path: 'auth/sign-in',
+    loadChildren: () => import('./pages/sign-in/sign-in.module').then( m => m.SignInPageModule),
+    pathMatch: "full"
   },
   {
-    path: 'users',
-    loadChildren: () => import('./pages/users/users.module').then(m => m.UsersPageModule)
-  },
-  {
-    path: 'prefs',
-    loadChildren: () => import('./pages/prefs/prefs.module').then(m => m.PrefsPageModule)
-  },
+    path: 'auth/sign-up',
+    loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule),
+  }
 ];
 
 @NgModule({

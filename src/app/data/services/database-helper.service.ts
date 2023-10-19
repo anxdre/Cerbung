@@ -8,8 +8,10 @@ import {User} from "../model/User";
 export class DatabaseHelperService {
   private _listOfStory: Story[]
   private _listOfUser: User[]
+  private _isAuth: boolean
 
   constructor() {
+    this._isAuth = false
     const dummyData = [
       {
         storyTitle: "Petualangan di Dunia Baru",
@@ -86,14 +88,16 @@ export class DatabaseHelperService {
       data.storyDescription = item.storyDescription
       data.storyVisibility = item.storyVisibility
       data.storyGenre = item.storyGenre
-      data.storyParagraph.push(item.storyParagraph[0])
+      data.storyParagraph = item.storyParagraph
       this._listOfStory.push(
         data
       )
     }
 
     this._listOfUser.push(
-      new User("Admin","admin123")
+      new User("admin", "admin123"),
+      new User("160420137", "160420137"),
+      new User("160920014", "160920014"),
     )
   }
 
@@ -102,7 +106,20 @@ export class DatabaseHelperService {
     return this._listOfStory;
   }
 
+
+  get listOfUser(): User[] {
+    return this._listOfUser;
+  }
+
   set listOfUser(value: User[]) {
     this._listOfUser = value;
+  }
+
+  get isAuth(): boolean {
+    return this._isAuth;
+  }
+
+  set isAuth(value: boolean) {
+    this._isAuth = value;
   }
 }

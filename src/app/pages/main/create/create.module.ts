@@ -4,19 +4,19 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PrefsPageRoutingModule } from './prefs-routing.module';
+import { CreatePageRoutingModule } from './create-routing.module';
 
-import { PrefsPage } from './prefs.page';
-import {SharedModule} from "../../shared/module/shared.module";
+import { CreatePage } from './create.page';
+import {SharedModule} from "../../../shared/module/shared.module";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        PrefsPageRoutingModule,
+        CreatePageRoutingModule,
         SharedModule
     ],
-  declarations: [PrefsPage]
+  declarations: [CreatePage]
 })
-export class PrefsPageModule {}
+export class CreatePageModule {}

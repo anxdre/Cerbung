@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Story} from "../../data/model/Story";
+import {Story} from "../../../data/model/Story";
 import {using} from "rxjs";
-import {DatabaseHelperService} from "../../data/services/database-helper.service";
+import {DatabaseHelperService} from "../../../data/services/database-helper.service";
 import {reload} from "ionicons/icons";
 import {AlertController, NavController} from "@ionic/angular";
 
@@ -10,7 +10,7 @@ import {AlertController, NavController} from "@ionic/angular";
   templateUrl: './create.page.html',
   styleUrls: ['./create.page.scss'],
 })
-export class CreatePage implements OnInit {
+export class CreatePage{
   userStep = 1
   storyData: Story
   visibilityDesc = ""
@@ -20,9 +20,6 @@ export class CreatePage implements OnInit {
 
   constructor(private dbHelper: DatabaseHelperService, private alertController: AlertController, private navController: NavController) {
     this.storyData = new Story()
-  }
-
-  ngOnInit() {
   }
 
   onVisibilityChange() {

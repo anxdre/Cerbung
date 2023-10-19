@@ -2,7 +2,7 @@
 <ion-content [fullscreen]="true">
   <div class="ion-padding">
     <ion-searchbar placeholder="Search..."></ion-searchbar>
-    <ion-list style="background: transparent" >
+    <ion-list style="background: transparent">
       <ion-button size="small" fill="solid">Semua</ion-button>
       <ion-button size="small" fill="outline">Aksi</ion-button>
       <ion-button size="small" fill="outline">Horror</ion-button>
@@ -10,7 +10,9 @@
       <ion-button size="small" fill="outline">Mystery</ion-button>
     </ion-list>
   </div>
-  <div *ngFor="let item of listOfStories">
-    <app-home-item [title]="item.storyTitle" [description]="item.storyDescription" [imgUrl]="item.storyThumbnail"></app-home-item>
+  <div *ngFor="let item of listOfStories;let i = index">
+    <app-home-item [title]="item.storyTitle" [description]="item.storyDescription"
+                   [imgUrl]="item.storyThumbnail"
+                   (click)="navigateToDetail(i)"></app-home-item>
   </div>
 </ion-content>

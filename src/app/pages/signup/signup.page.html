@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/main" (click)="onBackPressed()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div style="height:50%;display: flex;justify-content: center;align-items: center;flex-direction: column">
+    <ion-icon style="height: 8em;width: 8em;" class="ion-margin-top" name="logo-ionic"></ion-icon>
+    <p style="font-size: 38px">Cerbung</p>
+  </div>
+  <div style="height: 50%;display: flex;flex-direction: column;justify-content:flex-start">
+    <ion-input type="name" label="Full name" label-placement="floating" fill="outline"
+               placeholder="Enter name"></ion-input>
+    <ion-input [(ngModel)]="username" class="ion-margin-top" type="text" label="Username" label-placement="floating"
+               fill="outline"
+               placeholder="Enter username"></ion-input>
+    <ion-input [(ngModel)]="password" class="ion-margin-top" label="Password" label-placement="floating" fill="outline"
+               placeholder="Enter password"
+               type="password"></ion-input>
+
+    <ion-button (click)="signUp()"  class="ion-margin-top" fill="solid" shape="round" expand="block">Sign Up
+    </ion-button>
+    <ion-grid class="ion-margin-top">
+      <div *ngFor="let msg of validationMessage">
+        <ion-label color="danger">
+          ▶ {{msg}}
+        </ion-label>
+      </div>
+    </ion-grid>
+  </div>
+</ion-content>
