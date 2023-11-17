@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {DatabaseHelperService} from "../../data/services/database-helper.service";
 import {NavController, ToastController} from "@ionic/angular";
+import {ApiFactoryService} from "../../data/services/api-factory.service";
+import {User} from "../../data/model/User";
 
 @Component({
   selector: 'app-sign-in',
@@ -9,32 +11,42 @@ import {NavController, ToastController} from "@ionic/angular";
   styleUrls: ['./sign-in.page.scss'],
 })
 export class SignInPage implements OnInit {
-  username = ""
+  email = ""
   password = ""
   validationMessage: string[] = []
 
-  constructor(private router: Router, private navContorller: NavController, private databaseHelper: DatabaseHelperService, private toastController: ToastController) {
+  constructor(private apiFactory: ApiFactoryService, private router: Router, private navContorller: NavController, private databaseHelper: DatabaseHelperService, private toastController: ToastController) {
     if (this.databaseHelper.isAuth) {
       router.navigate(['main']).then(r => this.router.dispose())
     }
   }
 
   signIn() {
+    let user: User
     if (this.validateData()) {
-      let result = this.databaseHelper.listOfUser.find(userData =>
-        userData.username == this.username && userData.password == this.password)
-
-      if (result != null) {
-        this.presentToast(`Welcome ${result.username}`)
+      this.apiFactory.postRequest('api/auth/login', new Map<string, any>([
+        ['email', this.email],
+        ['password', this.password]
+      ])).subscribe((data) => {
+        user = data.user
+        localStorage.setItem(DatabaseHelperService.userEmailKey, user.email!!)
+        localStorage.setItem(DatabaseHelperService.userNameKey, user.name!!)
         this.databaseHelper.isAuth = true
-        return this.router.navigate(['menu'])
-      }
-      this.presentToast('Username or Password is wrong')
+        this.router.navigateByUrl('menu/tab/home')
+      }, () => {
+        this.presentToast("Account Not Found")
+      }, () => {
+        return
+      })
     }
   }
 
   navigateToSignUp() {
     this.router.navigate(['auth/sign-up'])
+  }
+
+  navigateToMain() {
+    this.router.navigate(['main']).then(r => this.router.dispose())
   }
 
 
@@ -50,10 +62,10 @@ export class SignInPage implements OnInit {
 
   validateData() {
     this.validationMessage = []
-    if (this.username == '') {
+    if (this.email == '') {
       this.validationMessage.push("Username belum terisi")
     }
-    if (this.username == ' ') {
+    if (this.email == ' ') {
       this.validationMessage.push("Username belum terisi")
     }
     if (this.password == '') {

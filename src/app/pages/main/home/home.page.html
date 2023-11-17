@@ -1,4 +1,4 @@
-<app-toolbar title="Cerbung"></app-toolbar>
+<app-toolbar title="Repasta"></app-toolbar>
 <ion-content [fullscreen]="true">
   <div class="ion-padding">
     <ion-searchbar placeholder="Search..."></ion-searchbar>
@@ -10,9 +10,9 @@
       <ion-button size="small" fill="outline">Mystery</ion-button>
     </ion-list>
   </div>
-  <div *ngFor="let item of listOfStories;let i = index">
-    <app-home-item [title]="item.storyTitle" [description]="item.storyDescription"
-                   [imgUrl]="item.storyThumbnail"
-                   (click)="navigateToDetail(i)"></app-home-item>
+  <div *ngFor="let item of listOfPasta;let i = index">
+    <app-home-item [title]="item.name" [description]="item.description"
+                   [imgUrl]="item.url"
+                   (click)="navigateToDetail(item.id)"></app-home-item>
   </div>
 </ion-content>

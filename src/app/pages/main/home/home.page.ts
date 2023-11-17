@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {Story} from "../../../data/model/Story";
 import {DatabaseHelperService} from "../../../data/services/database-helper.service";
 import {Router} from "@angular/router";
+import {ApiFactoryService} from "../../../data/services/api-factory.service";
+import {Pasta} from "../../../data/model/Pasta";
 
 @Component({
   selector: 'app-home',
@@ -9,13 +10,18 @@ import {Router} from "@angular/router";
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  listOfStories: Story[] = []
+  listOfPasta: Pasta[] = []
+  apiMessage: string = ''
 
-  constructor(private router: Router, private dbHelper: DatabaseHelperService) {
+  constructor(private router: Router, private dbHelper: DatabaseHelperService, private apiFactory:ApiFactoryService) {
   }
-
   ngOnInit() {
-    this.listOfStories = this.dbHelper.listOfStory
+    this.apiFactory.getRequest('api/pasta/all').subscribe((data)=>{
+      this.apiMessage = data.message
+      this.listOfPasta = data.data
+      console.log(data)
+      console.log(this.listOfPasta)
+    })
   }
 
   navigateToDetail(id: number) {

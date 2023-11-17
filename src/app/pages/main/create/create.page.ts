@@ -61,13 +61,13 @@ export class CreatePage{
 
   submitData() {
     if (this.validateData()) {
-      this.storyData.storyParagraph.push(this.storyFirstParagarph)
-      this.dbHelper.listOfStory.push(
-        this.storyData
-      )
-      this.presentAlert("Yeay!", "Create story success", "Story now will show up at home page section").then(r => {})
-      this.resetPage()
-      this.navController.navigateRoot("/").then(r => {})
+      // this.storyData.storyParagraph.push(this.storyFirstParagarph)
+      // this.dbHelper.listOfStory.push(
+      //   this.storyData
+      // )
+      // this.presentAlert("Yeay!", "Create story success", "Story now will show up at home page section").then(r => {})
+      // this.resetPage()
+      // this.navController.navigateRoot("/").then(r => {})
     }
   }
 

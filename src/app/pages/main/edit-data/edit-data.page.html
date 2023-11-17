@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="/main" (click)="onBackPressed()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Data</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container >
+    <ion-img src="{{imgUrl}}"></ion-img>
+    <ion-input [(ngModel)]="name" class="ion-margin-top" type="text" label="Name" label-placement="floating"
+               fill="outline"
+               placeholder="Enter username"></ion-input>
+    <ion-input [(ngModel)]="imgUrl" class="ion-margin-top" type="text" label="img url" label-placement="floating"
+               fill="outline"
+               placeholder="Enter username"></ion-input>
+    <ion-input [(ngModel)]="price" class="ion-margin-top" type="number" label="price" label-placement="floating"
+               fill="outline"
+               placeholder="Enter username"></ion-input>
+    <ion-textarea [(ngModel)]="description" class="ion-margin-top ion-margin-bottom text-area-medium-height"
+                  fill="outline"
+                  label="Description"
+                  label-placement="floating"
+                  placeholder="Enter description of pasta"></ion-textarea>
+
+    <ion-button (click)="saveData()" class="ion-margin-top" fill="solid" shape="round" expand="block">Save Data
+    </ion-button>
+    <ion-grid class="ion-margin-top">
+      <div *ngFor="let msg of validationMessage">
+        <ion-label color="danger">
+          ▶ {{msg}}
+        </ion-label>
+      </div>
+    </ion-grid>
+  </ng-container>
+</ion-content>

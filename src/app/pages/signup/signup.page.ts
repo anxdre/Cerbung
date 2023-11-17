@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {NavController, ToastController} from "@ionic/angular";
 import {DatabaseHelperService} from "../../data/services/database-helper.service";
-import {User} from "../../data/model/User";
 import {Router} from "@angular/router";
+import {ApiFactoryService} from "../../data/services/api-factory.service";
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +14,7 @@ export class SignupPage {
   password = ""
   validationMessage: string[] = []
 
-  constructor(private router: Router, private databaseHelper: DatabaseHelperService, private navController: NavController, private toastController: ToastController) {
+  constructor(private apiFactory:ApiFactoryService,private router: Router, private databaseHelper: DatabaseHelperService, private navController: NavController, private toastController: ToastController) {
     if (this.databaseHelper.isAuth) {
       router.navigate(['menu']).then(r => this.router.dispose())
     }
@@ -22,14 +22,23 @@ export class SignupPage {
 
   signUp() {
     if (this.validateData()) {
-      this.databaseHelper.listOfUser.push(
-        new User(this.username, this.password)
-      )
-      this.presentToast('Sign Up Success')
-      this.router.navigate(['/signIn'])
-      return
+      //   this.apiFactory.postRequest('api/auth/register', new Map<string, any>([
+      //     ['email', this.email],
+      //     ['password', this.password]
+      //   ])).subscribe((data) => {
+      //     user = data.user
+      //     localStorage.setItem(DatabaseHelperService.userEmailKey, user.email!!)
+      //     localStorage.setItem(DatabaseHelperService.userNameKey, user.name!!)
+      //     this.databaseHelper.isAuth = true
+      //     this.router.navigateByUrl('menu/tab/home')
+      //   }, () => {
+      //     this.presentToast("Account Not Found")
+      //   }, () => {
+      //     return
+      //   })
+      // }
+      this.presentToast('Sign Up Failed')
     }
-    this.presentToast('Sign Up Failed')
   }
 
   async presentToast(msg: string) {

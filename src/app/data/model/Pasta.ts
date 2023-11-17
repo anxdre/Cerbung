@@ -1,30 +1,39 @@
 // To parse this data:
 //
-//   import { Convert, User } from "./file";
+//   import { Convert, Pasta } from "./file";
 //
-//   const user = Convert.toUser(json);
+//   const pasta = Convert.toPasta(json);
 //
 // These functions will throw an error if the JSON doesn't
 // match the expected interface, even if the JSON is valid.
 
-export interface User {
+export interface Pasta {
   id?:                number;
   name?:              string;
-  email?:             string;
-  email_verified_at?: null;
-  created_at?:        Date;
-  updated_at?:        Date;
+  url?:               string;
+  description?:       string;
+  price?:             number;
+  pasta_instruction?: PastaInstruction[];
+}
+
+export interface PastaInstruction {
+  id?:          number;
+  pastas_id?:   number;
+  step?:        string;
+  instruction?: string;
+  created_at?:  Date;
+  updated_at?:  Date;
 }
 
 // Converts JSON strings to/from your types
 // and asserts the results of JSON.parse at runtime
 export class Convert {
-  public static toUser(json: string): User {
-    return cast(JSON.parse(json), r("User"));
+  public static toPasta(json: string): Pasta {
+    return cast(JSON.parse(json), r("Pasta"));
   }
 
-  public static userToJson(value: User): string {
-    return JSON.stringify(uncast(value, r("User")), null, 2);
+  public static pastaToJson(value: Pasta): string {
+    return JSON.stringify(uncast(value, r("Pasta")), null, 2);
   }
 }
 
@@ -181,11 +190,19 @@ function r(name: string) {
 }
 
 const typeMap: any = {
-  "User": o([
+  "Pasta": o([
     { json: "id", js: "id", typ: u(undefined, 0) },
     { json: "name", js: "name", typ: u(undefined, "") },
-    { json: "email", js: "email", typ: u(undefined, "") },
-    { json: "email_verified_at", js: "email_verified_at", typ: u(undefined, null) },
+    { json: "url", js: "url", typ: u(undefined, "") },
+    { json: "description", js: "description", typ: u(undefined, "") },
+    { json: "price", js: "price", typ: u(undefined, 0) },
+    { json: "pasta_instruction", js: "pasta_instruction", typ: u(undefined, a(r("PastaInstruction"))) },
+  ], false),
+  "PastaInstruction": o([
+    { json: "id", js: "id", typ: u(undefined, 0) },
+    { json: "pastas_id", js: "pastas_id", typ: u(undefined, 0) },
+    { json: "step", js: "step", typ: u(undefined, "") },
+    { json: "instruction", js: "instruction", typ: u(undefined, "") },
     { json: "created_at", js: "created_at", typ: u(undefined, Date) },
     { json: "updated_at", js: "updated_at", typ: u(undefined, Date) },
   ], false),

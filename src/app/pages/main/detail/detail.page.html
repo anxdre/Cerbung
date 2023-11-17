@@ -8,81 +8,59 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-infinite-scroll>
-    <ion-img src="{{storyData.storyThumbnail}}"></ion-img>
-    <ion-card>
-      <ion-grid class="ion-padding">
-        <ion-row class="ion-margin-bottom">
-          <ion-text color="dark" style="font-size: 18px; font-weight: bolder">{{storyData.storyTitle}}</ion-text>
-        </ion-row>
-        <ion-row class="ion-margin-bottom">
-          <ion-text class="ion-text-justify">{{storyData.storyDescription}}
-          </ion-text>
-        </ion-row>
-        <ion-row>
-          <ion-text>tags :</ion-text>
-        </ion-row>
-        <ion-row>
-          <ion-list style="background: transparent">
-            <ion-button size="small" fill="outline">Aksi</ion-button>
-            <ion-button size="small" fill="outline">Horror</ion-button>
-            <ion-button size="small" fill="outline">Mystery</ion-button>
-          </ion-list>
-        </ion-row>
-        <ion-row class="ion-align-items-center">
-          <ion-col>
-            <ion-text><i>Created by : Marry brawn</i></ion-text>
-          </ion-col>
-          <ion-col size="auto">
-            <ion-button fill="clear"
-                        size="small">43
-              <ion-icon id="btn-like" slot="start" name="heart"></ion-icon>
-            </ion-button>
-            <ion-button fill="clear" size="small">1,567
-              <ion-icon slot="start" name="bookmark-outline"></ion-icon>
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="navigateToEdit()">
+    <ion-fab-button>
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
-    <ng-container *ngFor="let item of storyData.storyParagraph">
+  <ion-infinite-scroll>
+    <ion-img src="{{pasta?.url}}"></ion-img>
+    <ion-grid class="ion-padding">
+      <ion-row class="ion-margin-bottom">
+        <ion-text color="dark" style="font-size: 18px; font-weight: bolder">{{pasta?.name}}</ion-text>
+      </ion-row>
+      <ion-row class="ion-margin-bottom">
+        <ion-text class="ion-text-justify">{{pasta?.description}}
+        </ion-text>
+      </ion-row>
+    </ion-grid>
+
+    <div class="ion-padding">
+      <ion-text color="dark" style="font-size: 18px; font-weight: bolder">How To Make :</ion-text>
+    </div>
+
+
+    <ng-container *ngFor="let item of pasta?.pasta_instruction">
       <ion-card style="">
         <ion-grid class="ion-padding">
           <ion-row class="ion-margin-bottom">
-            <ion-text><i>20-08-2023</i></ion-text>
+            <ion-text color="dark" style="font-size: 18px; font-weight: bolder">Step {{item.step}}</ion-text>
           </ion-row>
-          <ion-row class="ion-margin-bottom">
-            <span>{{item}}</span>
-          </ion-row>
-          <ion-row class="ion-align-items-center">
-            <ion-col>
-              <ion-text><i>Posted by : Marry brawn</i></ion-text>
-            </ion-col>
-            <ion-col size="auto">
-              <ion-button fill="clear" size="small">43
-                <ion-icon slot="start" name="heart-outline"></ion-icon>
-              </ion-button>
-            </ion-col>
+          <ion-row>
+            <span>{{item.instruction}}</span>
           </ion-row>
         </ion-grid>
       </ion-card>
     </ng-container>
 
-    <ion-card class="ion-margin-bottom">
-      <ion-grid class="ion-padding">
-        <ion-textarea [(ngModel)]="addParagraph" class="text-area-medium-height"
+    <ion-grid class="ion-padding">
+      <ion-row class="ion-margin-bottom">
+        <ion-text class="ion-margin-top" color="dark" style="font-size: 18px; font-weight: bolder">Add New Step
+        </ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-textarea [(ngModel)]="addParagraph" class="ion-margin-top ion-margin-bottom text-area-medium-height"
                       fill="outline"
-                      label="Continue the story"
+                      label="New step instruction"
                       label-placement="floating"
-                      placeholder="Enter first paragraph"></ion-textarea>
-        <ion-row [style.color]="addParagraph.length > 120 ? 'red' : 'gray'"><p>{{addParagraph.length}} of 120
-          character</p></ion-row>
-        <ion-row class="ion-justify-content-end">
-          <ion-button (click)="onSubmitStory()" fill="solid" expand="block">Add Story
-          </ion-button>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
+                      placeholder="Enter description of pasta"></ion-textarea>
+      </ion-row>
+      <ion-row>
+        <ion-button (click)="onSubmitStep()">
+          Submit
+        </ion-button>
+      </ion-row>
+    </ion-grid>
   </ion-infinite-scroll>
 </ion-content>

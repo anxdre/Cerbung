@@ -43,6 +43,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'tab/home',
     pathMatch: 'full'
+  },
+  {
+    path: 'edit-data/:id',
+    loadChildren: () => import('./edit-data/edit-data.module').then( m => m.EditDataPageModule)
   }
 ];
 
