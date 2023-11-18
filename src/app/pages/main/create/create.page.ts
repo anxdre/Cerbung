@@ -1,8 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Story} from "../../../data/model/Story";
-import {using} from "rxjs";
 import {DatabaseHelperService} from "../../../data/services/database-helper.service";
-import {reload} from "ionicons/icons";
 import {AlertController, NavController} from "@ionic/angular";
 
 @Component({
