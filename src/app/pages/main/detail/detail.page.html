@@ -8,37 +8,40 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="navigateToEdit()">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="addFavorite()">
     <ion-fab-button>
-      <ion-icon name="create"></ion-icon>
+      <ion-icon name="heart-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
   <ion-infinite-scroll>
-    <ion-img src="{{pasta?.url}}"></ion-img>
+    <ion-img src="{{storyData?.thumbnail}}"></ion-img>
     <ion-grid class="ion-padding">
       <ion-row class="ion-margin-bottom">
-        <ion-text color="dark" style="font-size: 18px; font-weight: bolder">{{pasta?.name}}</ion-text>
+        <ion-text color="dark" style="font-size: 18px; font-weight: bolder">{{storyData?.title}}</ion-text>
       </ion-row>
       <ion-row class="ion-margin-bottom">
-        <ion-text class="ion-text-justify">{{pasta?.description}}
-        </ion-text>
+        <ion-text class="ion-text-justify">{{storyData?.desc}}</ion-text>
+      </ion-row>
+
+      <ion-row class="ion-margin-bottom">
+        <ion-text class="ion-text-justify">Created By {{storyData?.desc}}</ion-text>
       </ion-row>
     </ion-grid>
 
     <div class="ion-padding">
-      <ion-text color="dark" style="font-size: 18px; font-weight: bolder">How To Make :</ion-text>
+      <ion-text color="dark" style="font-size: 18px; font-weight: bolder">Story :</ion-text>
     </div>
 
 
-    <ng-container *ngFor="let item of pasta?.pasta_instruction">
+    <ng-container *ngFor="let item of storyData?.cerbungStory">
       <ion-card style="">
         <ion-grid class="ion-padding">
-          <ion-row class="ion-margin-bottom">
-            <ion-text color="dark" style="font-size: 18px; font-weight: bolder">Step {{item.step}}</ion-text>
-          </ion-row>
           <ion-row>
-            <span>{{item.instruction}}</span>
+            <span>{{item.desc}}</span>
+          </ion-row>
+          <ion-row class="ion-margin-top">
+            <span>Created At null</span>
           </ion-row>
         </ion-grid>
       </ion-card>
@@ -46,15 +49,15 @@
 
     <ion-grid class="ion-padding">
       <ion-row class="ion-margin-bottom">
-        <ion-text class="ion-margin-top" color="dark" style="font-size: 18px; font-weight: bolder">Add New Step
+        <ion-text class="ion-margin-top" color="dark" style="font-size: 18px; font-weight: bolder">Add New Paragraph
         </ion-text>
       </ion-row>
       <ion-row>
         <ion-textarea [(ngModel)]="addParagraph" class="ion-margin-top ion-margin-bottom text-area-medium-height"
                       fill="outline"
-                      label="New step instruction"
+                      label="Enter new paragraph"
                       label-placement="floating"
-                      placeholder="Enter description of pasta"></ion-textarea>
+                      placeholder="Enter new paragraph"></ion-textarea>
       </ion-row>
       <ion-row>
         <ion-button (click)="onSubmitStep()">

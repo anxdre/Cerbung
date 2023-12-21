@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class ApiFactoryService {
-  private BASE_URL = 'https://hybrid.anxdre.my.id/'
+  private BASE_URL = 'https://cerbung.anxdre.my.id/'
 
   constructor(private http:HttpClient) {
   }

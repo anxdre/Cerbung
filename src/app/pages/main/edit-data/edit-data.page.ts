@@ -3,7 +3,6 @@ import {ApiFactoryService} from "../../../data/services/api-factory.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NavController} from "@ionic/angular";
 import {DatabaseHelperService} from "../../../data/services/database-helper.service";
-import {Pasta} from "../../../data/model/Pasta";
 import {catchError} from "rxjs";
 
 @Component({
@@ -18,7 +17,6 @@ export class EditDataPage implements OnInit {
   description: string = ''
   price: string = ''
   pastaId: number
-  pasta?: Pasta
 
   constructor(private apiFactory: ApiFactoryService, private route: ActivatedRoute, private navController: NavController, private router: Router, private databaseHelper: DatabaseHelperService) {
     this.pastaId = parseInt(this.route.snapshot.paramMap.get('id') ?? "0")
@@ -26,12 +24,7 @@ export class EditDataPage implements OnInit {
 
   ngOnInit() {
     this.apiFactory.getRequest(`api/pasta/${this.pastaId}`).subscribe((data) => {
-      this.pasta = data.data
 
-      this.name = this.pasta?.name ?? ""
-      this.imgUrl = this.pasta?.url ?? ""
-      this.description = this.pasta?.description ?? ""
-      this.price = this.pasta?.price!!.toString() ?? ""
     })
   }
 

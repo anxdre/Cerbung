@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {DatabaseHelperService} from "../../../data/services/database-helper.service";
-import {NavController} from "@ionic/angular";
-import {Story} from "../../../data/model/Story";
-import {Pasta, PastaInstruction} from "../../../data/model/Pasta";
+import {NavController, ToastController} from "@ionic/angular";
 import {ApiFactoryService} from "../../../data/services/api-factory.service";
 import {catchError} from "rxjs";
+import {Story} from "../../../data/model/Story";
+import {StoryDetail} from "../../../data/model/StoryDetail";
 
 @Component({
   selector: 'app-detail',
@@ -14,37 +14,47 @@ import {catchError} from "rxjs";
 })
 export class DetailPage implements OnInit {
 
-  pastaId?: number | null
-  pasta?: Pasta
-  step: string = ''
+  storyId?: number | null
+  storyData: StoryDetail = {}
   addParagraph = ""
 
-  constructor(private apiFactory: ApiFactoryService, private route: ActivatedRoute, private navController: NavController, private router: Router, private databaseHelper: DatabaseHelperService) {
-    this.pastaId = parseInt(this.route.snapshot.paramMap.get('id') ?? "0")
+  constructor(private toastController: ToastController, private apiFactory: ApiFactoryService, private route: ActivatedRoute, private navController: NavController, private router: Router, private databaseHelper: DatabaseHelperService) {
+    this.storyId = parseInt(this.route.snapshot.paramMap.get('id') ?? "0")
   }
 
   ngOnInit() {
-    this.apiFactory.getRequest(`api/pasta/${this.pastaId}`).subscribe((data) => {
-      this.pasta = data.data
+    this.fetchData()
+  }
+
+  fetchData() {
+    this.apiFactory.getRequest(`api/cerbung/${this.storyId}`).subscribe((data) => {
+      this.storyData = data.data
+      this.storyData.cerbungStory = data.data.cerbung_story
+      console.log(this.storyData.createdAt)
     })
   }
 
-  onSubmitStep() {
-    // let formData = new FormData()
-    // formData.set('pastas_id',this.pastaId!!.toString() ?? '')
-    // formData.set('description',this.addParagraph.toString() ?? '')
-    let bodyRequest = new Map<string, any>([
-      ['pastas_id', this.pasta?.id],
-      ['description', this.addParagraph],
-    ])
+  convertDate(date: Date) {
+    return date.toLocaleString()
+  }
 
-    //step was auto increment in server
-    this.apiFactory.postRequest('api/pastaInstruction/add', bodyRequest).pipe(catchError(err => {
-      throw err.message
-    })).subscribe((response) => {
-      this.apiFactory.getRequest(`api/pasta/${this.pastaId}`).subscribe((data) => {
-        this.pasta = data.data
-      })
+  onSubmitStep() {
+    let bodyRequest = new Map<string, any>([
+      ['paragraph', this.addParagraph],
+      ['id_cerbung', this.storyId],
+      ['id_users', localStorage.getItem(DatabaseHelperService.userid)],
+    ])
+    this.apiFactory.postRequest('api/cerbung/paragraph', bodyRequest).subscribe({
+      next: (data) => {
+        this.presentToast(data.message)
+        this.addParagraph = ""
+      },
+      error: (err) => {
+        this.presentToast(err.error.message)
+      },
+      complete: () => {
+        this.fetchData()
+      }
     })
   }
 
@@ -53,7 +63,35 @@ export class DetailPage implements OnInit {
   }
 
   navigateToEdit() {
-    this.router.navigate([`menu/edit-data/${this.pastaId}`])
+    this.router.navigate([`menu/edit-data/${this.storyId}`])
+  }
+
+  addFavorite() {
+    let bodyRequest = new Map<string, any>([
+      ['user_id', localStorage.getItem(DatabaseHelperService.userid)],
+      ['cerbung_id', this.storyId],
+    ])
+    this.apiFactory.postRequest('api/user-following', bodyRequest).subscribe({
+      next: (data) => {
+        this.presentToast(data.message)
+      },
+      error: (err) => {
+        this.presentToast(err.error.message)
+      },
+      complete: () => {
+        return
+      }
+    })
+  }
+
+  async presentToast(msg: string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 1500,
+      position: "bottom",
+    });
+
+    await toast.present();
   }
 
   protected readonly Component = Component;

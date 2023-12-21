@@ -5,8 +5,10 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-infinite-scroll>
   <div style="height:50%;display: flex;justify-content: center;align-items: center;flex-direction: column">
-   <img src="https://mir-s3-cdn-cf.behance.net/project_modules/hd/cbc29d101633189.5f23077f105ec.jpg">
+    <ion-icon style="height: 8em;width: 8em;" class="ion-margin-top" name="logo-ionic"></ion-icon>
+    <p style="font-size: 38px">Cerbung</p>
   </div>
   <div style="height: 50%;display: flex;flex-direction: column;justify-content: flex-start">
     <ion-input [(ngModel)]="email" type="text" label="Email" label-placement="floating" fill="outline"
@@ -27,4 +29,5 @@
       </div>
     </ion-grid>
   </div>
+  </ion-infinite-scroll>
 </ion-content>

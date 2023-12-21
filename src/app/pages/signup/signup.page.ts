@@ -10,7 +10,8 @@ import {ApiFactoryService} from "../../data/services/api-factory.service";
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage {
-  username = ""
+  fullName = ""
+  email = ""
   password = ""
   validationMessage: string[] = []
 
@@ -22,22 +23,22 @@ export class SignupPage {
 
   signUp() {
     if (this.validateData()) {
-      //   this.apiFactory.postRequest('api/auth/register', new Map<string, any>([
-      //     ['email', this.email],
-      //     ['password', this.password]
-      //   ])).subscribe((data) => {
-      //     user = data.user
-      //     localStorage.setItem(DatabaseHelperService.userEmailKey, user.email!!)
-      //     localStorage.setItem(DatabaseHelperService.userNameKey, user.name!!)
-      //     this.databaseHelper.isAuth = true
-      //     this.router.navigateByUrl('menu/tab/home')
-      //   }, () => {
-      //     this.presentToast("Account Not Found")
-      //   }, () => {
-      //     return
-      //   })
-      // }
-      this.presentToast('Sign Up Failed')
+      this.apiFactory.postRequest('api/auth/register', new Map<string, any>([
+        ['name', this.fullName],
+        ['email', this.email],
+        ['password', this.password]
+      ])).subscribe({
+        next: (data) => {
+          this.presentToast(`User ${data.name} succesfully registered`)
+          this.onBackPressed()
+        },
+        error: (e) => {
+          this.presentToast("User failed to register")
+        },
+        complete: () => {
+          return
+        }
+      })
     }
   }
 
@@ -54,11 +55,17 @@ export class SignupPage {
   validateData() {
     this.validationMessage = []
 
-    if (this.username == '') {
-      this.validationMessage.push("Username belum terisi")
+    if (this.fullName == '') {
+      this.validationMessage.push("Nama belum terisi")
     }
-    if (this.username == ' ') {
-      this.validationMessage.push("Username belum terisi")
+    if (this.fullName == ' ') {
+      this.validationMessage.push("Nsername belum terisi")
+    }
+    if (this.email == '') {
+      this.validationMessage.push("Email belum terisi")
+    }
+    if (this.email == ' ') {
+      this.validationMessage.push("Email belum terisi")
     }
     if (this.password == '') {
       this.validationMessage.push("Password belum terisi")

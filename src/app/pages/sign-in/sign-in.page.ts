@@ -27,16 +27,21 @@ export class SignInPage implements OnInit {
       this.apiFactory.postRequest('api/auth/login', new Map<string, any>([
         ['email', this.email],
         ['password', this.password]
-      ])).subscribe((data) => {
-        user = data.user
-        localStorage.setItem(DatabaseHelperService.userEmailKey, user.email!!)
-        localStorage.setItem(DatabaseHelperService.userNameKey, user.name!!)
-        this.databaseHelper.isAuth = true
-        this.router.navigateByUrl('menu/tab/home')
-      }, () => {
-        this.presentToast("Account Not Found")
-      }, () => {
-        return
+      ])).subscribe({
+        next: (data) => {
+          user = data
+          localStorage.setItem(DatabaseHelperService.userEmailKey, user.user?.email!!)
+          localStorage.setItem(DatabaseHelperService.userNameKey, user.user?.name!!)
+          localStorage.setItem(DatabaseHelperService.userid, user.user?.id?.toString()!!)
+          this.databaseHelper.isAuth = true
+          this.navigateToMain()
+        },
+        error: (e) => {
+          this.presentToast(e.error.message)
+        },
+        complete: () => {
+          return
+        }
       })
     }
   }
@@ -46,7 +51,7 @@ export class SignInPage implements OnInit {
   }
 
   navigateToMain() {
-    this.router.navigate(['main']).then(r => this.router.dispose())
+    this.router.navigateByUrl('menu/tab/home').then(this.router.dispose)
   }
 
 
